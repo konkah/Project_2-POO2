@@ -1,3 +1,5 @@
+package program;
+
 import javax.swing.*;
 
 public class MainScreen extends JFrame{
