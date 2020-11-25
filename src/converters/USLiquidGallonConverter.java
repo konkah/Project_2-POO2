@@ -1,4 +1,8 @@
 package converters;
 
-public class USLiquidGallonConverter {
+public class USLiquidGallonConverter extends AbstractConverter{
+    @Override
+    protected float factor() {
+        return 378541f/100000;
+    }
 }

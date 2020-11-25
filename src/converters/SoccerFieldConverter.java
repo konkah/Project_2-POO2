@@ -1,4 +1,8 @@
 package converters;
 
-public class SoccerFieldConverter {
+public class SoccerFieldConverter extends AbstractConverter{
+    @Override
+    protected float factor() {
+        return 7140;
+    }
 }

@@ -1,4 +1,8 @@
 package converters;
 
-public class LitreConverter {
+public class LitreConverter extends AbstractConverter{
+    @Override
+    protected float factor() {
+        return 1;
+    }
 }
