@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
+import java.io.File;
 
 public class MainScreen extends JFrame{
     private JPanel panel1;
@@ -16,6 +17,11 @@ public class MainScreen extends JFrame{
     private JTextField textField1;
 
     public MainScreen(){
+        File f = new File("src/converters");
+        String[] pathnames = f.list();
+        for(String pathname:pathnames){
+            comboBox1.addItem(pathname);
+        }
         comboBox1.addItem("Litro");
         comboBox2.addItem("Mililitro");
         comboBox1.addActionListener(new ActionListener() {
