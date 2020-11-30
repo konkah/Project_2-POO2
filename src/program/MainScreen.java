@@ -21,6 +21,10 @@ public class MainScreen extends JFrame{
     private JComboBox<AbstractConverter> comboToUnit;
     private JTextField textOriginalValue;
     private JLabel footer;
+    private JPanel grid;
+    private JPanel menu;
+    private JButton helpButton;
+    private JButton creditsButton;
 
     private Map<MeasureType, List<AbstractConverter>> converters = new TreeMap<>();
     private Integer convertersCount = 0;
@@ -79,6 +83,7 @@ public class MainScreen extends JFrame{
                 }
             }
         });
+
         textOriginalValue.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
