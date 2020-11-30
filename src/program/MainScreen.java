@@ -9,10 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class MainScreen extends JFrame{
     private JPanel panel1;
@@ -24,16 +22,19 @@ public class MainScreen extends JFrame{
     private Map<MeasureType, List<AbstractConverter>> converters = new TreeMap<>();
 
     public MainScreen(){
-        File f = new File("src/converters");
-        String[] pathnames = f.list();
+        File convertersDir = new File("src/converters");
+        String[] converterFiles = convertersDir.list();
 
-        if (pathnames == null) {
+        if (converterFiles == null) {
             printError("converters folder not found.");
             return;
         }
 
-        for(String pathname:pathnames){
-            String name = pathname.replace(".java", "");
+        List<String> sortedConverterFiles = Arrays.stream(converterFiles)
+                .sorted().collect(Collectors.toList());
+
+        for(String converterFile: sortedConverterFiles){
+            String name = converterFile.replace(".java", "");
             AbstractConverter converter = newConverter(name);
 
             if (converter == null) {
