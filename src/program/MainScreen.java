@@ -4,12 +4,14 @@ import converters.AbstractConverter;
 import converters.MeasureType;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.*;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainScreen extends JFrame{
@@ -18,8 +20,10 @@ public class MainScreen extends JFrame{
     private JComboBox<AbstractConverter> comboBox1;
     private JComboBox<AbstractConverter> comboBox2;
     private JTextField textField1;
+    private JLabel footer;
 
     private Map<MeasureType, List<AbstractConverter>> converters = new TreeMap<>();
+    private Integer convertersCount = 0;
 
     public MainScreen(){
         File convertersDir = new File("src/converters");
@@ -48,9 +52,12 @@ public class MainScreen extends JFrame{
                 converters.put(type, new ArrayList<>());
             }
             converters.get(type).add(converter);
+            convertersCount++;
         }
 
         fillComboToUnit();
+
+        showConverterCount();
 
         comboBox1.addActionListener(new ActionListener() {
             @Override
@@ -104,7 +111,8 @@ public class MainScreen extends JFrame{
             if (!isConverter || isMother)
                 return null;
 
-            return (AbstractConverter) Class.forName("converters." + name).newInstance();
+            Class<?> _class = Class.forName("converters." + name);
+            return (AbstractConverter) _class.newInstance();
         } catch (InstantiationException e) {
             printError("Class " + name + " cannot be initialized.");
             return null;
@@ -118,7 +126,13 @@ public class MainScreen extends JFrame{
     }
 
     private void printError(String message) {
-        System.out.println(message);
+        footer.setText("Error: " + message);
+        footer.setForeground(new Color( 153, 0, 0));
+    }
+
+    private void showConverterCount() {
+        footer.setText(convertersCount + " unit converter(s) available");
+        footer.setForeground(textField1.getForeground());
     }
 
     private void updateResult() {
@@ -143,6 +157,8 @@ public class MainScreen extends JFrame{
         float newValue = destinyUnit.fromBasicUnit(basicUnit);
 
         textField2.setText(Float.toString(newValue));
+
+        showConverterCount();
     }
 
     private AbstractConverter fromUnit() {
