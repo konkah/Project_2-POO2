@@ -97,6 +97,13 @@ public class MainScreen extends JFrame{
                 openWindow(" - Help", new Help().getPanel());
             }
         });
+
+        creditsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                openWindow(" - Credits", new Credits().getPanel());
+            }
+        });
     }
 
     private void fillComboToUnit() {
