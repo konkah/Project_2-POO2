@@ -5,4 +5,9 @@ public class InchConverter extends AbstractConverter{
     protected float factor() {
         return 254f/10000;
     }
+
+    @Override
+    public MeasureType type() {
+        return MeasureType.DISTANCE;
+    }
 }

@@ -10,4 +10,6 @@ public abstract class AbstractConverter {
     public float fromBasicUnit(float number){
         return  number/factor();
     }
+
+    public abstract MeasureType type();
 }
