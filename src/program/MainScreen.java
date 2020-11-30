@@ -123,7 +123,18 @@ public class MainScreen extends JFrame{
 
     private void updateResult() {
         String typedValue = textField1.getText();
-        float value = Float.parseFloat(typedValue);
+
+        float value;
+        try
+        {
+            value = Float.parseFloat(typedValue);
+        }
+        catch(NumberFormatException e) {
+            if (!typedValue.isEmpty()) {
+                printError("'" + typedValue + "' is not a number.");
+            }
+            return;
+        }
 
         AbstractConverter originalUnit = fromUnit();
         AbstractConverter destinyUnit = toUnit();
