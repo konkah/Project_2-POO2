@@ -5,4 +5,9 @@ public class CubicMetreConverter extends AbstractConverter{
     protected float factor() {
         return 1000;
     }
+
+    @Override
+    public MeasureType type() {
+        return MeasureType.VOLUME;
+    }
 }

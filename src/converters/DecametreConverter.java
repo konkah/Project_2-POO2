@@ -5,4 +5,9 @@ public class DecametreConverter extends AbstractConverter{
     protected float factor() {
         return 10;
     }
+
+    @Override
+    public MeasureType type() {
+        return MeasureType.DISTANCE;
+    }
 }

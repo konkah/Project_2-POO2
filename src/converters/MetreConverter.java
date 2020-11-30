@@ -5,4 +5,9 @@ public class MetreConverter extends AbstractConverter{
     protected float factor() {
         return 1;
     }
+
+    @Override
+    public MeasureType type() {
+        return MeasureType.DISTANCE;
+    }
 }

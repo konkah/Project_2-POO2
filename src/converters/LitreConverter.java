@@ -5,4 +5,9 @@ public class LitreConverter extends AbstractConverter{
     protected float factor() {
         return 1;
     }
+
+    @Override
+    public MeasureType type() {
+        return MeasureType.VOLUME;
+    }
 }
