@@ -90,6 +90,13 @@ public class MainScreen extends JFrame{
                 updateResult();
             }
         });
+
+        helpButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent actionEvent) {
+                openWindow(" - Help", new Help().getPanel());
+            }
+        });
     }
 
     private void fillComboToUnit() {
@@ -175,8 +182,12 @@ public class MainScreen extends JFrame{
     }
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("MainScreen");
-        frame.setContentPane(new MainScreen().form);
+        openWindow("", new MainScreen().form);
+    }
+
+    private static void openWindow(String title, JPanel panel) {
+        JFrame frame = new JFrame("Measure Converter" + title);
+        frame.setContentPane(panel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
