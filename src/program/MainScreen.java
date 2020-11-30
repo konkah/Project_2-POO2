@@ -15,11 +15,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class MainScreen extends JFrame{
-    private JPanel panel1;
-    private JTextField textField2;
-    private JComboBox<AbstractConverter> comboBox1;
-    private JComboBox<AbstractConverter> comboBox2;
-    private JTextField textField1;
+    private JPanel form;
+    private JTextField textResultValue;
+    private JComboBox<AbstractConverter> comboFromUnit;
+    private JComboBox<AbstractConverter> comboToUnit;
+    private JTextField textOriginalValue;
     private JLabel footer;
 
     private Map<MeasureType, List<AbstractConverter>> converters = new TreeMap<>();
@@ -45,7 +45,7 @@ public class MainScreen extends JFrame{
                 continue;
             }
 
-            comboBox1.addItem(converter);
+            comboFromUnit.addItem(converter);
 
             MeasureType type = converter.type();
             if (!converters.containsKey(type)) {
@@ -59,7 +59,7 @@ public class MainScreen extends JFrame{
 
         showConverterCount();
 
-        comboBox1.addActionListener(new ActionListener() {
+        comboFromUnit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String command = actionEvent.getActionCommand();
@@ -70,7 +70,7 @@ public class MainScreen extends JFrame{
             }
         });
 
-        comboBox2.addActionListener(new ActionListener() {
+        comboToUnit.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
                 String command = actionEvent.getActionCommand();
@@ -79,7 +79,7 @@ public class MainScreen extends JFrame{
                 }
             }
         });
-        textField1.addKeyListener(new KeyAdapter() {
+        textOriginalValue.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent keyEvent) {
                 updateResult();
@@ -88,7 +88,7 @@ public class MainScreen extends JFrame{
     }
 
     private void fillComboToUnit() {
-        comboBox2.removeAllItems();
+        comboToUnit.removeAllItems();
 
         AbstractConverter fromUnit = fromUnit();
         if (fromUnit == null)
@@ -98,7 +98,7 @@ public class MainScreen extends JFrame{
 
         for (AbstractConverter toUnit : converters.get(type)) {
             if (fromUnit != toUnit) {
-                comboBox2.addItem(toUnit);
+                comboToUnit.addItem(toUnit);
             }
         }
     }
@@ -132,16 +132,16 @@ public class MainScreen extends JFrame{
 
     private void showConverterCount() {
         footer.setText(convertersCount + " unit converter(s) available");
-        footer.setForeground(textField1.getForeground());
+        footer.setForeground(textOriginalValue.getForeground());
     }
 
     private void updateResult() {
-        String typedValue = textField1.getText();
+        String typedValue = textOriginalValue.getText();
 
-        float value;
+        float originalValue;
         try
         {
-            value = Float.parseFloat(typedValue);
+            originalValue = Float.parseFloat(typedValue);
         }
         catch(NumberFormatException e) {
             if (!typedValue.isEmpty()) {
@@ -151,27 +151,27 @@ public class MainScreen extends JFrame{
         }
 
         AbstractConverter originalUnit = fromUnit();
-        AbstractConverter destinyUnit = toUnit();
+        AbstractConverter resultUnit = toUnit();
 
-        float basicUnit = originalUnit.toBasicUnit(value);
-        float newValue = destinyUnit.fromBasicUnit(basicUnit);
+        float basicUnit = originalUnit.toBasicUnit(originalValue);
+        float resultValue = resultUnit.fromBasicUnit(basicUnit);
 
-        textField2.setText(Float.toString(newValue));
+        textResultValue.setText(Float.toString(resultValue));
 
         showConverterCount();
     }
 
     private AbstractConverter fromUnit() {
-        return (AbstractConverter) comboBox1.getSelectedItem();
+        return (AbstractConverter) comboFromUnit.getSelectedItem();
     }
 
     private AbstractConverter toUnit() {
-        return (AbstractConverter) comboBox2.getSelectedItem();
+        return (AbstractConverter) comboToUnit.getSelectedItem();
     }
 
     public static void main(String[] args) {
         JFrame frame = new JFrame("MainScreen");
-        frame.setContentPane(new MainScreen().panel1);
+        frame.setContentPane(new MainScreen().form);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
